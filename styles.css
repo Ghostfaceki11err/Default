@@ -59,9 +59,10 @@ body {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: relative;
+    padding: 40px 0;
     transition: background-color 0.5s ease, color 0.3s ease;
 }
 
@@ -133,7 +134,7 @@ body {
 .app-container {
     width: 92%;
     max-width: 1200px;
-    margin: 40px auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -268,11 +269,7 @@ body {
     gap: 30px;
 }
 
-@media (max-width: 900px) {
-    .workspace {
-        grid-template-columns: 1fr;
-    }
-}
+/* Media queries moved to the end of file */
 
 .glass-card {
     background: var(--glass-bg);
@@ -492,6 +489,7 @@ body {
     letter-spacing: 1px;
     box-shadow: 0 4px 15px var(--glow-shadow);
     animation: float 4s ease-in-out infinite alternate;
+    flex-shrink: 0;
 }
 
 .file-badge.pdf-theme { background: rgba(244, 63, 94, 0.15); color: var(--accent-ruby); border: 1px solid rgba(244, 63, 94, 0.3); }
@@ -538,6 +536,7 @@ body {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s, color 0.2s;
+    flex-shrink: 0;
 }
 
 .close-btn:hover {
@@ -856,12 +855,179 @@ body {
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .download-link:hover {
     background: var(--accent-emerald);
     color: white;
     box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE MEDIA QUERIES
+   ------------------------------------------------------------- */
+
+/* Tablet & Smaller Devices (900px and under) */
+@media (max-width: 900px) {
+    .workspace {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Mobile Devices (600px and under) */
+@media (max-width: 600px) {
+    body {
+        padding: 20px 0;
+    }
+    
+    .app-container {
+        width: 95%;
+        gap: 20px;
+    }
+
+    .app-header {
+        padding: 12px 20px;
+        border-radius: 16px;
+    }
+
+    .brand-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .brand h1 {
+        font-size: 1.3rem;
+    }
+
+    .portal-dropzone {
+        min-height: 300px;
+        padding: 30px 20px;
+        border-radius: 24px;
+        gap: 15px;
+    }
+
+    .portal-svg-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .portal-center {
+        width: 50px;
+        height: 50px;
+    }
+
+    .upload-arrow {
+        width: 22px;
+        height: 22px;
+    }
+
+    .portal-text h3 {
+        font-size: 1.2rem;
+    }
+
+    .portal-text p {
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+    }
+
+    .conversion-form-card {
+        padding: 20px;
+        border-radius: 24px;
+        gap: 15px;
+    }
+
+    .active-file-header {
+        padding-bottom: 15px;
+        gap: 10px;
+    }
+
+    .file-badge {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .file-meta h4 {
+        font-size: 1rem;
+    }
+
+    .file-meta p {
+        font-size: 0.8rem;
+    }
+
+    .custom-select-wrapper select {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        border-radius: 12px;
+    }
+
+    .glow-action-btn {
+        padding: 12px;
+        font-size: 0.95rem;
+        border-radius: 12px;
+    }
+
+    .history-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+}
+
+/* Small Mobile Devices (380px and under) */
+@media (max-width: 380px) {
+    .app-header {
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .brand {
+        gap: 8px;
+    }
+
+    .brand-logo {
+        width: 28px;
+        height: 28px;
+    }
+
+    .brand h1 {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    .portal-dropzone {
+        padding: 20px 10px;
+        min-height: 270px;
+    }
+
+    .portal-svg-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .portal-center {
+        width: 44px;
+        height: 44px;
+    }
+
+    .upload-arrow {
+        width: 18px;
+        height: 18px;
+    }
+
+    .history-item {
+        padding: 10px 12px;
+    }
+
+    .item-title {
+        font-size: 0.85rem;
+    }
+
+    .download-link {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
 }
 
 
