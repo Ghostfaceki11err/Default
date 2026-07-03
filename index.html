@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Default Converter | 100% Free Client-Side Transcoder</title>
+    
+    <!-- SEO Optimization -->
+    <meta name="description" content="Default Converter: Convert DOCX documents to PDF and transcode images (PNG, JPG, WebP) entirely within your browser. 100% free, private, and secure.">
+    <meta name="keywords" content="word to pdf, docx to pdf, client side converter, image converter, free converter, secure file conversion">
+    
+    <!-- Dynamic SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='%238b5cf6'/><stop offset='100%' stop-color='%236366f1'/></radialGradient></defs><rect width='100' height='100' rx='25' fill='%230a0914'/><circle cx='50' cy='50' r='25' fill='url(%23g)'/><text x='50%' y='60%' font-size='28' font-family='Outfit' font-weight='800' fill='white' text-anchor='middle'>D</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Wasm COOP/COEP Headers service worker helper -->
+    <script src="coi-serviceworker.js"></script>
+
+    <!-- Library CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Aurora background elements -->
+    <div class="aurora-container">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+        <div class="aurora aurora-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-logo">
+                    <div class="logo-core"></div>
+                    <div class="logo-ring"></div>
+                </div>
+                <h1>DEFAULT<span>CONVERTER</span></h1>
+            </div>
+            
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                    <svg id="sun-icon" class="theme-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="moon-icon" class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Left Side: Dropzone & Settings Portal -->
+            <section class="portal-panel">
+                <div id="drop-zone" class="portal-dropzone">
+                    <div class="portal-svg-container">
+                        <!-- Orbiting tech paths -->
+                        <svg class="portal-rings" viewBox="0 0 200 200">
+                            <circle class="ring ring-outer" cx="100" cy="100" r="85"></circle>
+                            <circle class="ring ring-middle" cx="100" cy="100" r="65"></circle>
+                            <circle class="ring ring-inner" cx="100" cy="100" r="45"></circle>
+                        </svg>
+                        <div class="portal-center">
+                            <svg class="upload-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="portal-text">
+                        <h3>Drop File Into the Portal</h3>
+                        <p>Support for Word (.docx) and Images (PNG, JPG, WebP)</p>
+                        <button class="browse-btn">Or Select File</button>
+                        <input type="file" id="file-input" class="hidden">
+                    </div>
+                </div>
+
+                <!-- Active Conversion Form -->
+                <div id="conversion-form" class="conversion-form-card hidden">
+                    <div class="active-file-header">
+                        <div id="file-type-badge" class="file-badge font-bold">DOCX</div>
+                        <div class="file-meta">
+                            <h4 id="file-name-display" class="truncate">document_file_name.docx</h4>
+                            <p id="file-size-display">1.2 MB</p>
+                        </div>
+                        <button id="cancel-file" class="close-btn" aria-label="Remove File">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+
+                    <div class="conversion-settings">
+                        <label for="format-select">Convert to:</label>
+                        <div class="custom-select-wrapper">
+                            <select id="format-select">
+                                <!-- Options populated dynamically in app.js -->
+                            </select>
+                        </div>
+                        
+                        <button id="convert-btn" class="glow-action-btn">
+                            <span>Execute Conversion</span>
+                            <div class="btn-glow-ring"></div>
+                        </button>
+                    </div>
+
+                    <!-- Processing Mode -->
+                    <div id="processing-view" class="processing-view hidden">
+                        <div class="morph-container">
+                            <div class="morph-blob"></div>
+                            <div class="progress-pct" id="progress-text">0%</div>
+                        </div>
+                        <h4 id="status-label">Initializing Transcoder...</h4>
+                        <div class="progress-track">
+                            <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Session Outputs Sidebar -->
+            <section class="side-panel">
+                <!-- History Log Card -->
+                <div class="history-card glass-card">
+                    <div class="panel-header">
+                        <h3>Session Outputs</h3>
+                        <button id="clear-history" class="text-btn">Clear</button>
+                    </div>
+                    <div class="history-list" id="history-container">
+                        <div class="empty-history">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            <p>No completed jobs in this session</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Main JavaScript Orchestrator -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
